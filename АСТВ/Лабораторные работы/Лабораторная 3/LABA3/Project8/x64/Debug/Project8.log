@@ -1,0 +1,10 @@
+﻿  Assembling Source.asm...
+Source.asm(5): error A2008: syntax error : .
+Source.asm(6): error A2008: syntax error : .
+Source.asm(7): error A2008: syntax error : .
+Source.asm(72): error A2070: invalid instruction operands
+Source.asm(97): error A2070: invalid instruction operands
+Source.asm(103): error A2008: syntax error : Invoke
+Source.asm(104): error A2008: syntax error : Start
+Source.asm(104): error A2088: END directive required at end of file
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: выход из команды "ml64.exe /c /nologo /Zi /Fo"Project8\x64\Debug\Source.obj" /W3 /errorReport:prompt  /TaSource.asm" с кодом "1".
