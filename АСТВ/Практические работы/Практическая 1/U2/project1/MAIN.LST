@@ -1,0 +1,31 @@
+MAIN                                                                                                          PAGE 1
+
+                       1    $MOD51
+0000                   2    ORG 00h
+0000 C290              3    clr P1.0
+0002 901870            4    MOV DPTR, #1870h
+0005 7A04              5    MOV R2, #04h
+0007 7B00              6    MOV R3, #00h
+0009 79FF              7    MOV R1, #0FFh
+000B                   8    TEST:
+000B E9                9    MOV A, R1
+000C F0               10    MOVX @DPTR, A
+000D E0               11    MOVX A, @DPTR
+000E 64FF             12    XRL A, #0FFh
+0010 7009             13    JNZ ERROR
+0012 A3               14    INC DPTR
+0013 DBF6             15    DJNZ R3, TEST
+0015 DAF4             16    DJNZ R2, TEST
+0017 C290             17    CLR P1.0
+0019 80FE             18    SJMP $
+001B                  19    ERROR:
+001B D290             20    SETB P1.0
+001D 80FE             21    SJMP $
+                      22    END
+
+VERSION 1.2k ASSEMBLY COMPLETE, 0 ERRORS FOUND
+MAIN                                                                                                          PAGE 2
+
+ERROR. . . . . . . . . . . . . .  C ADDR  001BH  
+P1 . . . . . . . . . . . . . . .  D ADDR  0090H  PREDEFINED  
+TEST . . . . . . . . . . . . . .  C ADDR  000BH  

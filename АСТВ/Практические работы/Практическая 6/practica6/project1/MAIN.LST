@@ -1,0 +1,75 @@
+MAIN                                                                                                          PAGE 1
+
+                       1    $MOD51
+                       2    
+0000 020020            3    jmp start
+                       4    
+0020                   5    org 20h
+0020                   6    start:
+                       7        ; ----- Nastroika skorosti -----
+                       8        ; Ustanavlivaem SMOD=1 dlya skorosti 375 Kbit/s
+0020 758780            9        mov pcon, #80h
+                      10        
+                      11        ; ----- Nastroika porta: rezhim 2, PRIEM -----
+                      12        ; SCON = 1001 0000 (rezhim 2, razreshen priem)
+0023 759890           13        mov scon, #90h       ; REN=1 (priem vklyuchen)
+                      14        
+                      15        ; ----- Podgotovka k priemu -----
+0026 7830             16        mov r0, #30h         ; nachalniy adres dlya sohraneniya (XX=30h)
+0028 7908             17        mov r1, #8           ; schetchik bayt (N=8)
+                      18        
+                      19        ; ========================================
+                      20        ; PRIEM 8 BAYT IZ VIRTUAL TERMINAL
+                      21        ; ========================================
+002A                  22    receive_loop:
+                      23        ; Zhdem poka pridet simvol
+002A                  24    wait_ri:
+002A 3098FD           25        jnb ri, wait_ri      ; zhdem flag RI=1 (simvol prinyat)
+002D E599             26        mov a, sbuf          ; chitaem prinyatiy bayt
+002F F6               27        mov @r0, a           ; sohranyaem v pamyat po adresu R0
+0030 C298             28        clr ri               ; sbrosaem flag dlya sleduyushego bayta
+0032 08               29        inc r0               ; perehodim k sleduyushemu adresu
+0033 D9F5             30        djnz r1, receive_loop ; povtoryaem 8 raz
+                      31        
+                      32        ; ========================================
+                      33        ; OTPRAVKA PRINYATIH DANNIH OBRATNO (DLA PROVERKI)
+                      34        ; ========================================
+                      35        
+                      36        ; Menyaem nastroiku porta na PEREDACHU
+0035 759888           37        mov scon, #88h       ; REN=0 (priem otklyuchen, rezhim 2)
+                      38        
+0038 7830             39        mov r0, #30h         ; snova ukazivaem na adres 30h
+003A 7908             40        mov r1, #8           ; schetchik bayt (N=8)
+                      41        
+003C                  42    send_loop:
+003C E6               43        mov a, @r0           ; zagruzhaem bayt iz pamyati
+003D F599             44        mov sbuf, a          ; otpravlyaem cherez port
+                      45        
+003F                  46    wait_ti:
+003F 3099FD           47        jnb ti, wait_ti      ; zhdem okonchaniya otpravki
+0042 C299             48        clr ti               ; sbrosaem flag
+0044 08               49        inc r0               ; sleduyushiy adres
+0045 D9F5             50        djnz r1, send_loop   ; povtoryaem 8 raz
+                      51        
+                      52        ; ========================================
+                      53        ; BESKONECHNIY CIKL
+                      54        ; ========================================
+0047                  55    stop:
+0047 80FE             56        jmp stop
+                      57    
+                      58    END
+
+VERSION 1.2k ASSEMBLY COMPLETE, 0 ERRORS FOUND
+MAIN                                                                                                          PAGE 2
+
+PCON . . . . . . . . . . . . . .  D ADDR  0087H  PREDEFINED  
+RECEIVE_LOOP . . . . . . . . . .  C ADDR  002AH  
+RI . . . . . . . . . . . . . . .  B ADDR  0098H  PREDEFINED  
+SBUF . . . . . . . . . . . . . .  D ADDR  0099H  PREDEFINED  
+SCON . . . . . . . . . . . . . .  D ADDR  0098H  PREDEFINED  
+SEND_LOOP. . . . . . . . . . . .  C ADDR  003CH  
+START. . . . . . . . . . . . . .  C ADDR  0020H  
+STOP . . . . . . . . . . . . . .  C ADDR  0047H  
+TI . . . . . . . . . . . . . . .  B ADDR  0099H  PREDEFINED  
+WAIT_RI. . . . . . . . . . . . .  C ADDR  002AH  
+WAIT_TI. . . . . . . . . . . . .  C ADDR  003FH  

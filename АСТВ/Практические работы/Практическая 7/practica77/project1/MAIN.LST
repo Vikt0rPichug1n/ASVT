@@ -1,0 +1,173 @@
+MAIN                                                                                                          PAGE 1
+
+                       1    $MOD52
+                       2    
+0000                   3    ORG 0000h
+0000 020100            4    LJMP START
+                       5    
+0003                   6    ORG 0003h
+0003 02012C            7    LJMP INT0_ISR
+                       8    
+000B                   9    ORG 000Bh
+000B 020194           10    LJMP TIMER0_ISR
+                      11    
+0013                  12    ORG 0013h
+0013 02013A           13    LJMP INT1_ISR
+                      14    
+001B                  15    ORG 001Bh
+001B 020179           16    LJMP TIMER1_ISR
+                      17    
+0100                  18    ORG 100H
+                      19    
+  0030                20    DUTY EQU 30H
+  0031                21    HIGH_TIME_L EQU 31H
+  0032                22    HIGH_TIME_H EQU 32H
+                      23    
+  0081                24    PERIOD_H EQU 81H
+  000C                25    PERIOD_L EQU 0CH
+                      26    
+0100                  27    START:
+0100 758107           28    MOV SP,#07H
+0103 7590FF           29    MOV P1,#0FFH
+0106 75B0FF           30    MOV P3,#0FFH
+0109 C290             31    CLR P1.0
+                      32    
+010B 753032           33    MOV DUTY,#50
+                      34    
+010E 120148           35    LCALL SET_HIGH_TIME
+                      36    
+0111 758911           37    MOV TMOD,#11H
+0114 758D81           38    MOV TH1,#PERIOD_H
+0117 758B0C           39    MOV TL1,#PERIOD_L
+                      40    
+011A D288             41    SETB IT0
+011C D28A             42    SETB IT1
+011E D2A8             43    SETB EX0
+0120 D2AA             44    SETB EX1
+0122 D2AB             45    SETB ET1
+0124 D2A9             46    SETB ET0
+0126 D2AF             47    SETB EA
+0128 D28E             48    SETB TR1
+                      49    
+012A                  50    MAIN:
+012A 80FE             51    SJMP MAIN
+                      52    
+012C                  53    INT0_ISR:
+012C E530             54    MOV A,DUTY
+012E B43201           55    CJNE A,#50,INC_DUTY
+0131 32               56    RETI
+                      57    
+0132                  58    INC_DUTY:
+MAIN                                                                                                          PAGE 2
+
+0132 240A             59    ADD A,#10
+0134 F530             60    MOV DUTY,A
+0136 120148           61    LCALL SET_HIGH_TIME
+0139 32               62    RETI
+                      63    
+013A                  64    INT1_ISR:
+013A E530             65    MOV A,DUTY
+013C B41401           66    CJNE A,#20,DEC_DUTY
+013F 32               67    RETI
+                      68    
+0140                  69    DEC_DUTY:
+0140 940A             70    SUBB A,#10
+0142 F530             71    MOV DUTY,A
+0144 120148           72    LCALL SET_HIGH_TIME
+0147 32               73    RETI
+                      74    
+0148                  75    SET_HIGH_TIME:
+0148 E530             76    MOV A,DUTY
+014A B41407           77    CJNE A,#20,C30
+014D 753219           78    MOV HIGH_TIME_H,#19H
+0150 753164           79    MOV HIGH_TIME_L,#64H
+0153 22               80    RET
+                      81    
+0154                  82    C30:
+0154 B41E07           83    CJNE A,#30,C40
+0157 753226           84    MOV HIGH_TIME_H,#26H
+015A 753116           85    MOV HIGH_TIME_L,#16H
+015D 22               86    RET
+                      87    
+015E                  88    C40:
+015E B42807           89    CJNE A,#40,C50
+0161 753232           90    MOV HIGH_TIME_H,#32H
+0164 7531C8           91    MOV HIGH_TIME_L,#0C8H
+0167 22               92    RET
+                      93    
+0168                  94    C50:
+0168 B43207           95    CJNE A,#50,DEF
+016B 75323F           96    MOV HIGH_TIME_H,#3FH
+016E 75317A           97    MOV HIGH_TIME_L,#7AH
+0171 22               98    RET
+                      99    
+0172                 100    DEF:
+0172 75323F          101    MOV HIGH_TIME_H,#3FH
+0175 75317A          102    MOV HIGH_TIME_L,#7AH
+0178 22              103    RET
+                     104    
+0179                 105    TIMER1_ISR:
+0179 C28F            106    CLR TF1
+017B 758D81          107    MOV TH1,#PERIOD_H
+017E 758B0C          108    MOV TL1,#PERIOD_L
+0181 D290            109    SETB P1.0
+0183 C28C            110    CLR TR0
+0185 7400            111    MOV A,#00H
+0187 9531            112    SUBB A,HIGH_TIME_L
+0189 F58A            113    MOV TL0,A
+018B 7400            114    MOV A,#00H
+018D 9532            115    SUBB A,HIGH_TIME_H
+018F F58C            116    MOV TH0,A
+MAIN                                                                                                          PAGE 3
+
+0191 D28C            117    SETB TR0
+0193 32              118    RETI
+                     119    
+0194                 120    TIMER0_ISR:
+0194 C28D            121    CLR TF0
+0196 C290            122    CLR P1.0
+0198 C28C            123    CLR TR0
+019A 32              124    RETI
+                     125    
+                     126    END
+
+VERSION 1.2k ASSEMBLY COMPLETE, 0 ERRORS FOUND
+MAIN                                                                                                          PAGE 4
+
+C30. . . . . . . . . . . . . . .  C ADDR  0154H  
+C40. . . . . . . . . . . . . . .  C ADDR  015EH  
+C50. . . . . . . . . . . . . . .  C ADDR  0168H  
+DEC_DUTY . . . . . . . . . . . .  C ADDR  0140H  
+DEF. . . . . . . . . . . . . . .  C ADDR  0172H  
+DUTY . . . . . . . . . . . . . .    NUMB  0030H  
+EA . . . . . . . . . . . . . . .  B ADDR  00AFH  PREDEFINED  
+ET0. . . . . . . . . . . . . . .  B ADDR  00A9H  PREDEFINED  
+ET1. . . . . . . . . . . . . . .  B ADDR  00ABH  PREDEFINED  
+EX0. . . . . . . . . . . . . . .  B ADDR  00A8H  PREDEFINED  
+EX1. . . . . . . . . . . . . . .  B ADDR  00AAH  PREDEFINED  
+HIGH_TIME_H. . . . . . . . . . .    NUMB  0032H  
+HIGH_TIME_L. . . . . . . . . . .    NUMB  0031H  
+INC_DUTY . . . . . . . . . . . .  C ADDR  0132H  
+INT0_ISR . . . . . . . . . . . .  C ADDR  012CH  
+INT1_ISR . . . . . . . . . . . .  C ADDR  013AH  
+IT0. . . . . . . . . . . . . . .  B ADDR  0088H  PREDEFINED  
+IT1. . . . . . . . . . . . . . .  B ADDR  008AH  PREDEFINED  
+MAIN . . . . . . . . . . . . . .  C ADDR  012AH  
+P1 . . . . . . . . . . . . . . .  D ADDR  0090H  PREDEFINED  
+P3 . . . . . . . . . . . . . . .  D ADDR  00B0H  PREDEFINED  
+PERIOD_H . . . . . . . . . . . .    NUMB  0081H  
+PERIOD_L . . . . . . . . . . . .    NUMB  000CH  
+SET_HIGH_TIME. . . . . . . . . .  C ADDR  0148H  
+SP . . . . . . . . . . . . . . .  D ADDR  0081H  PREDEFINED  
+START. . . . . . . . . . . . . .  C ADDR  0100H  
+TF0. . . . . . . . . . . . . . .  B ADDR  008DH  PREDEFINED  
+TF1. . . . . . . . . . . . . . .  B ADDR  008FH  PREDEFINED  
+TH0. . . . . . . . . . . . . . .  D ADDR  008CH  PREDEFINED  
+TH1. . . . . . . . . . . . . . .  D ADDR  008DH  PREDEFINED  
+TIMER0_ISR . . . . . . . . . . .  C ADDR  0194H  
+TIMER1_ISR . . . . . . . . . . .  C ADDR  0179H  
+TL0. . . . . . . . . . . . . . .  D ADDR  008AH  PREDEFINED  
+TL1. . . . . . . . . . . . . . .  D ADDR  008BH  PREDEFINED  
+TMOD . . . . . . . . . . . . . .  D ADDR  0089H  PREDEFINED  
+TR0. . . . . . . . . . . . . . .  B ADDR  008CH  PREDEFINED  
+TR1. . . . . . . . . . . . . . .  B ADDR  008EH  PREDEFINED  

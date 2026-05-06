@@ -1,0 +1,93 @@
+HI-TECH Software 8051-C Compiler V9.60
+
+Linker command line:
+
+--edf=C:\PROGRA~2\HI-TEC~1\HC51\lite\9.60\dat\en_msgs.txt \
+  -h+Z:\project1.sym -z -Q8051AH -ol.obj -MZ:\project1.map -E1 \
+  -ver=8051-C#V9.60 -ACODE=00h-0FFFh -pvectors=00h \
+  -prbit=0/20h,rbss,rdata/CODE,irdata/CODE,idata/rbss -pbss=XDATA/idata \
+  -pdata=CODE+100h -pconst=CODE+100h -pstrings=CODE+100h -pnvram=bss,heap \
+  C:\Users\pichu\AppData\Local\Temp\s278.obj Z:\main_0.obj \
+  C:\PROGRA~2\HI-TEC~1\HC51\lite\9.60\lib\51--nsc.lib 
+
+Object code version is 3.8
+
+Machine type is 8051AH
+
+Call graph:
+
+*start1 size 0,0 offset 0
+*    _main size 0,18 offset 0
+*        _delay_with_button size 0,6 offset 18
+
+		Name          Link     Load   Length Selector Space Scale
+C:\Users\pichu\AppData\Local\Temp\s278.obj
+		vectors          0        0        3       0     0
+		text            44       44       14       0     0
+Z:\main_0.obj   data           100      100        A     100     0
+		text           10A      10A      18B     100     0
+
+C:\PROGRA~2\HI-TEC~1\HC51\lite\9.60\lib\51--nsc.lib
+powerup.obj     text            58       58        3       0     0
+str_cops.obj    text             3        3       41       0     0
+
+COMMON          rbss            20       20       18      20     1
+
+TOTAL		Name          Link     Load   Length
+	CLASS	CODE     
+		vectors          0        0        3
+		data           100      100        A
+		text            44       44       14
+		text           10A      10A      18B
+		text            58       58        3
+		text             3        3       41
+
+	CLASS	DATA     
+		rbss            20       20       18
+
+	CLASS	XDATA    
+
+	CLASS	BITSEG   
+
+
+
+SEGMENTS	Name		Load	Length	 Top	Selector    Space Class
+
+		vectors         000000	00005B	00005B	       0       0  CODE    
+		rbit            000020	000018	000038	      20       1  BITSEG  
+		data            000100	000195	000295	     100       0  CODE    
+
+
+UNUSED ADDRESS RANGES
+
+	CODE             05B-0FF
+	                 295-FFF
+
+                                  Symbol Table
+
+?a_delay_with_button rbss    032  ?a_main              rbss    020
+__Bbss               bss     038  __Bidata             idata   038
+__Birdata            irdata  003  __Brbit              rbit    020
+__Brdata             rdata   003  __Hbss               bss     038
+__Hcode              code    038  __Hconst             const   100
+__Hdata              data    10A  __Hheap              heap    038
+__Hidata             idata   038  __Hirdata            irdata  038
+__Hnvram             nvram   038  __Hrbit              rbit    000
+__Hrbss              rbss    038  __Hrdata             rdata   038
+__Hstrings           strings 100  __Htext              text    038
+__Hvectors           vectors 003  __Lbss               bss     038
+__Lcode              code    038  __Lconst             const   100
+__Ldata              data    100  __Lheap              heap    038
+__Lidata             idata   038  __Lirdata            irdata  038
+__Lnvram             nvram   038  __Lrbit              rbit    000
+__Lrbss              rbss    020  __Lrdata             rdata   038
+__Lstrings           strings 100  __Ltext              text    038
+__Lvectors           vectors 000  __S0                 (abs)   295
+_delay_with_button   text    10A  _exit                text    055
+_main                text    141  intlevel0            (abs)   000
+intlevel1            (abs)   000  powerup              text    058
+small_model          (abs)   001  stack_internal       (abs)   001
+start                vectors 000  start1               text    044
+str_copy             text    019  str_load             text    019
+str_xcopy            text    003  strx_copy            text    019
+strx_load            text    019  strx_xcopy           text    003

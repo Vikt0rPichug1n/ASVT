@@ -1,0 +1,37 @@
+MAIN                                                                                                          PAGE 1
+
+                       1    $MOD51
+                       2    
+0000                   3    ORG 0H
+0000 7580FF            4        MOV P0, #0FFH      
+0003 7590FF            5        MOV P1, #0FFH      
+0006 75A000            6        MOV P2, #00H       
+                       7    
+0009                   8    MAIN:
+0009 C2B6              9        CLR P3.6
+000B D2B6             10        SETB P3.6
+000D C2B6             11        CLR P3.6
+000F 20B7FD           12        JB P3.7, $
+                      13        
+0012 E580             14        MOV A, P0          
+0014 C3               15        CLR C
+0015 9480             16        SUBB A, #128       
+0017 E590             17        MOV A, P1          
+0019 4002             18        JC SKIP            
+001B 2401             19        ADD A, #1          
+001D                  20    SKIP:
+001D F5A0             21        MOV P2, A          
+                      22        
+001F 80E8             23        SJMP MAIN
+                      24    
+                      25    END
+
+VERSION 1.2k ASSEMBLY COMPLETE, 0 ERRORS FOUND
+MAIN                                                                                                          PAGE 2
+
+MAIN . . . . . . . . . . . . . .  C ADDR  0009H  
+P0 . . . . . . . . . . . . . . .  D ADDR  0080H  PREDEFINED  
+P1 . . . . . . . . . . . . . . .  D ADDR  0090H  PREDEFINED  
+P2 . . . . . . . . . . . . . . .  D ADDR  00A0H  PREDEFINED  
+P3 . . . . . . . . . . . . . . .  D ADDR  00B0H  PREDEFINED  
+SKIP . . . . . . . . . . . . . .  C ADDR  001DH  

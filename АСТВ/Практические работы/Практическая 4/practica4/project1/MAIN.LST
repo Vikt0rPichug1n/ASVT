@@ -1,0 +1,95 @@
+MAIN                                                                                                          PAGE 1
+
+                       1    $MOD51
+0000 020020            2    jmp start
+                       3    
+000B                   4    org 0bh
+000B C28C              5    clr tcon.4
+000D 32                6    reti
+                       7    
+0020                   8    org 20h
+0020                   9    start:
+0020 C3               10    clr c
+0021 758901           11    mov tmod,#01h
+0024 D2AF             12    setb ie.7
+0026 D2A9             13    setb ie.1
+0028 759000           14    mov p1,#0h
+                      15    
+002B                  16    met1:
+                      17    
+002B 7408             18    mov a,#08h
+002D F590             19    mov p1,a
+002F 7A1E             20    mov r2,#30          
+0031 12005A           21    lcall delay
+                      22    
+                      23    
+0034 7414             24    mov a,#14h
+0036 F590             25    mov p1,a
+0038 7A14             26    mov r2,#20         
+003A 12005A           27    lcall delay
+                      28    
+                      29    
+003D 7422             30    mov a,#22h
+003F F590             31    mov p1,a
+0041 7A32             32    mov r2,#50          
+0043 12005A           33    lcall delay
+                      34    
+                      35    
+0046 7441             36    mov a,#41h
+0048 F590             37    mov p1,a
+004A 7A46             38    mov r2,#70          
+004C 12005A           39    lcall delay
+                      40    
+                      41    
+004F 7480             42    mov a,#80h
+0051 F590             43    mov p1,a
+0053 7A1E             44    mov r2,#30          
+0055 12005A           45    lcall delay
+                      46    
+0058 80D1             47    jmp met1
+                      48    
+                      49    
+005A                  50    delay:
+005A EA               51    mov a, r2          
+005B F8               52    mov r0, a           
+005C FB               53    mov r3, a         
+                      54    
+005D                  55    dly_outer:
+005D 7902             56    mov r1, #2          
+                      57    
+005F                  58    dly_inner:
+MAIN                                                                                                          PAGE 2
+
+005F 758AB0           59    mov TL0, #0B0h      
+0062 758C3C           60    mov TH0, #3Ch
+0065 D28C             61    setb tcon.4
+                      62    
+0067                  63    wait:
+0067 308DFD           64    jnb tcon.5, wait
+006A C28D             65    clr tcon.5
+006C C28C             66    clr tcon.4
+                      67    
+006E D9EF             68    djnz r1, dly_inner 
+0070 D8EB             69    djnz r0, dly_outer  
+                      70    
+0072 EB               71    mov a, r3           
+0073 FA               72    mov r2, a
+0074 22               73    ret
+                      74    
+                      75    END
+
+VERSION 1.2k ASSEMBLY COMPLETE, 0 ERRORS FOUND
+MAIN                                                                                                          PAGE 3
+
+DELAY. . . . . . . . . . . . . .  C ADDR  005AH  
+DLY_INNER. . . . . . . . . . . .  C ADDR  005FH  
+DLY_OUTER. . . . . . . . . . . .  C ADDR  005DH  
+IE . . . . . . . . . . . . . . .  D ADDR  00A8H  PREDEFINED  
+MET1 . . . . . . . . . . . . . .  C ADDR  002BH  
+P1 . . . . . . . . . . . . . . .  D ADDR  0090H  PREDEFINED  
+START. . . . . . . . . . . . . .  C ADDR  0020H  
+TCON . . . . . . . . . . . . . .  D ADDR  0088H  PREDEFINED  
+TH0. . . . . . . . . . . . . . .  D ADDR  008CH  PREDEFINED  
+TL0. . . . . . . . . . . . . . .  D ADDR  008AH  PREDEFINED  
+TMOD . . . . . . . . . . . . . .  D ADDR  0089H  PREDEFINED  
+WAIT . . . . . . . . . . . . . .  C ADDR  0067H  

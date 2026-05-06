@@ -1,0 +1,173 @@
+MAIN                                                                                                          PAGE 1
+
+                       1    $MOD51
+0000                   2    ORG 00h
+                       3    
+                       4    
+                       5    
+0000                   6    START:
+                       7     
+0000 758038            8            MOV P0, #038h
+0003 75A001            9            MOV P2, #1
+0006 75A000           10            MOV P2, #0
+                      11    
+0009 75800C           12            MOV P0, #00Ch
+000C 75A001           13            MOV P2, #1
+000F 75A000           14            MOV P2, #0
+                      15    
+0012 758006           16            MOV P0, #006h
+0015 75A001           17            MOV P2, #1
+0018 75A000           18            MOV P2, #0
+                      19    
+001B 758001           20            MOV P0, #001h
+001E 75A001           21            MOV P2, #1
+0021 75A000           22            MOV P2, #0
+                      23    
+0024 7FFF             24            MOV R7, #0FFh
+0026 DFFE             25    DELAY:  DJNZ R7, DELAY
+                      26    
+0028 7800             27            MOV R0, #0              
+002A 7900             28            MOV R1, #0             
+                      29    
+002C                  30    MAIN_LOOP:
+002C E9               31            MOV A, R1
+002D B40060           32            CJNE A, #0, LINE2
+                      33    
+0030                  34    LINE1:
+                      35    
+0030 758001           36            MOV P0, #001h
+0033 75A001           37            MOV P2, #1
+0036 75A000           38            MOV P2, #0
+                      39    
+                      40    
+0039 7480             41            MOV A, #080h
+003B 28               42            ADD A, R0               
+003C F580             43            MOV P0, A
+003E 75A001           44            MOV P2, #1
+0041 75A000           45            MOV P2, #0
+                      46    
+                      47    
+0044 7580A2           48            MOV P0, #162
+0047 75A003           49            MOV P2, #3
+004A 75A002           50            MOV P2, #2
+                      51    
+                      52    
+004D 7580A9           53            MOV P0, #169
+0050 75A003           54            MOV P2, #3
+0053 75A002           55            MOV P2, #2
+                      56    
+                      57    
+0056 7580AB           58            MOV P0, #171
+MAIN                                                                                                          PAGE 2
+
+0059 75A003           59            MOV P2, #3
+005C 75A002           60            MOV P2, #2
+                      61    
+                      62    
+005F 7580B3           63            MOV P0, #179
+0062 75A003           64            MOV P2, #3
+0065 75A002           65            MOV P2, #2
+                      66    
+                      67    
+0068 7580AF           68            MOV P0, #175
+006B 75A003           69            MOV P2, #3
+006E 75A002           70            MOV P2, #2
+                      71    
+                      72    
+0071 7580B1           73            MOV P0, #177
+0074 75A003           74            MOV P2, #3
+0077 75A002           75            MOV P2, #2
+                      76    
+007A 7FFF             77            MOV R7, #0FFh
+007C DFFE             78    WAIT1:  DJNZ R7, WAIT1
+                      79    
+007E 08               80            INC R0
+007F E8               81            MOV A, R0
+0080 B40303           82            CJNE A, #3, NOT_END1     
+0083 020089           83            LJMP END_LINE1
+0086                  84    NOT_END1:
+0086 02002C           85            LJMP MAIN_LOOP
+                      86    
+0089                  87    END_LINE1:
+0089 7800             88            MOV R0, #0
+008B 7901             89            MOV R1, #1
+008D 02002C           90            LJMP MAIN_LOOP
+                      91    
+0090                  92    LINE2:
+                      93        
+0090 758001           94            MOV P0, #001h
+0093 75A001           95            MOV P2, #1
+0096 75A000           96            MOV P2, #0
+                      97    
+                      98           
+0099 74C0             99            MOV A, #0C0h
+009B 28              100            ADD A, R0               
+009C F580            101            MOV P0, A
+009E 75A001          102            MOV P2, #1
+00A1 75A000          103            MOV P2, #0
+                     104    
+                     105          
+00A4 7580A2          106            MOV P0, #162
+00A7 75A003          107            MOV P2, #3
+00AA 75A002          108            MOV P2, #2
+                     109    
+                     110            
+00AD 7580A9          111            MOV P0, #169
+00B0 75A003          112            MOV P2, #3
+00B3 75A002          113            MOV P2, #2
+                     114    
+                     115           
+00B6 7580AB          116            MOV P0, #171
+MAIN                                                                                                          PAGE 3
+
+00B9 75A003          117            MOV P2, #3
+00BC 75A002          118            MOV P2, #2
+                     119    
+                     120           
+00BF 7580B3          121            MOV P0, #179
+00C2 75A003          122            MOV P2, #3
+00C5 75A002          123            MOV P2, #2
+                     124    
+                     125           
+00C8 7580AF          126            MOV P0, #175
+00CB 75A003          127            MOV P2, #3
+00CE 75A002          128            MOV P2, #2
+                     129    
+                     130           
+00D1 7580B1          131            MOV P0, #177
+00D4 75A003          132            MOV P2, #3
+00D7 75A002          133            MOV P2, #2
+                     134    
+00DA 7FFF            135            MOV R7, #0FFh
+00DC DFFE            136    WAIT2:  DJNZ R7, WAIT2
+                     137    
+00DE 08              138            INC R0
+00DF E8              139            MOV A, R0
+00E0 B40303          140            CJNE A, #3, NOT_END2
+00E3 0200E9          141            LJMP END_LINE2
+00E6                 142    NOT_END2:
+00E6 02002C          143            LJMP MAIN_LOOP
+                     144    
+00E9                 145    END_LINE2:
+00E9 7800            146            MOV R0, #0
+00EB 7900            147            MOV R1, #0
+00ED 02002C          148            LJMP MAIN_LOOP
+                     149    
+                     150            END
+
+VERSION 1.2k ASSEMBLY COMPLETE, 0 ERRORS FOUND
+MAIN                                                                                                          PAGE 4
+
+DELAY. . . . . . . . . . . . . .  C ADDR  0026H  
+END_LINE1. . . . . . . . . . . .  C ADDR  0089H  
+END_LINE2. . . . . . . . . . . .  C ADDR  00E9H  
+LINE1. . . . . . . . . . . . . .  C ADDR  0030H  NOT USED  
+LINE2. . . . . . . . . . . . . .  C ADDR  0090H  
+MAIN_LOOP. . . . . . . . . . . .  C ADDR  002CH  
+NOT_END1 . . . . . . . . . . . .  C ADDR  0086H  
+NOT_END2 . . . . . . . . . . . .  C ADDR  00E6H  
+P0 . . . . . . . . . . . . . . .  D ADDR  0080H  PREDEFINED  
+P2 . . . . . . . . . . . . . . .  D ADDR  00A0H  PREDEFINED  
+START. . . . . . . . . . . . . .  C ADDR  0000H  NOT USED  
+WAIT1. . . . . . . . . . . . . .  C ADDR  007CH  
+WAIT2. . . . . . . . . . . . . .  C ADDR  00DCH  
